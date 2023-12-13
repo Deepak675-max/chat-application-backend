@@ -12,20 +12,15 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    PhoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     password: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    totalExpense: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        defaultValue: 0
-    },
-    isPremiumUser: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-    }
+
 }, {
     timestamps: true
 });
