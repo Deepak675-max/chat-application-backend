@@ -10,7 +10,9 @@ const User = require('./models/user.model');
 const ForgotPasswordRequests = require('./models/forgetPasswordRequests.model');
 const expenseTrackerBackendApp = express();
 
-expenseTrackerBackendApp.use(cors());
+expenseTrackerBackendApp.use(cors({
+    origin: "http://127.0.0.1:5500"
+}));
 
 const sequelize = require('./helper/common/init_mysql');
 
