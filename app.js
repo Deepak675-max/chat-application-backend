@@ -1,37 +1,42 @@
 require('dotenv').config();
 const express = require('express');
 const httpErrors = require("http-errors");
-
 const cors = require("cors");
-
-const authRoutes = require("./routes/user.route");
-
 const User = require('./models/user.model');
 const ForgotPasswordRequests = require('./models/forgetPasswordRequests.model');
-const expenseTrackerBackendApp = express();
+const chatAppBackend = express();
 
-expenseTrackerBackendApp.use(cors({
+chatAppBackend.use(cors({
     origin: "http://127.0.0.1:5500"
 }));
 
 const sequelize = require('./helper/common/init_mysql');
 
 
-expenseTrackerBackendApp.use(express.json());
-expenseTrackerBackendApp.use(express.urlencoded({ extended: true }));
+chatAppBackend.use(express.json());
+chatAppBackend.use(express.urlencoded({ extended: true }));
 
 
+const authRoutes = require("./routes/auth.route");
+chatAppBackend.use("/api/auth", authRoutes);
 
-expenseTrackerBackendApp.use("/api/auth", authRoutes);
+const chatRoutes = require("./routes/chat.route");
+chatAppBackend.use("/api/users", chatRoutes);
+
+const messageRoutes = require("./routes/message.route");
+chatAppBackend.use("/api/chats", messageRoutes);
+
+const userRoutes = require("./routes/user.route");
+chatAppBackend.use("/api/users", userRoutes);
 
 
-expenseTrackerBackendApp.use(async (req, _res, next) => {
+chatAppBackend.use(async (req, _res, next) => {
     console.log(req, _res);
     next(httpErrors.NotFound(`Route not Found for [${req.method}] ${req.url}`));
 });
 
 // Common Error Handler
-expenseTrackerBackendApp.use((error, req, res, next) => {
+chatAppBackend.use((error, req, res, next) => {
     const responseStatus = error.status || 500;
     const responseMessage =
         error.message || `Cannot resolve request [${req.method}] ${req.url}`;
@@ -55,7 +60,7 @@ const port = process.env.APP_PORT;
 
 sequelize.sync({ alter: true })
     .then(() => {
-        expenseTrackerBackendApp.listen(port, () => {
+        chatAppBackend.listen(port, () => {
             console.log(`server is listening on the port of ${port}`);
         })
     })

@@ -2,6 +2,8 @@ const sequelize = require("../helper/common/init_mysql")
 
 const DataTypes = require("sequelize");
 
+const ForgotPasswordRequests = require('./forgetPasswordRequests.model');
+
 const User = sequelize.define('User', {
     // Model attributes are defined here
     userName: {
@@ -24,6 +26,9 @@ const User = sequelize.define('User', {
 }, {
     timestamps: true
 });
+
+User.hasMany(ForgotPasswordRequests, { foreignKey: 'userId' });
+ForgotPasswordRequests.belongsTo(User, { foreignKey: 'userId' });
 
 User.sync().catch(error => {
     console.log(error);

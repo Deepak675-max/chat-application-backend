@@ -96,6 +96,7 @@ const loginUser = async (req, res, next) => {
 const getUserFromToken = async (req, res, next) => {
     try {
         const userDetails = {
+            userId: req.user.id,
             userName: req.user.userName,
             email: req.user.email,
             isPremiumUser: req.user.isPremiumUser
