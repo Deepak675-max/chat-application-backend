@@ -98,7 +98,7 @@ ForgotPasswordRequests.belongsTo(User, { foreignKey: 'userId' });
 
 const port = process.env.APP_PORT;
 
-sequelize.sync()
+sequelize.sync({ alter: true })
     .then(() => {
         server.listen(port, () => {
             console.log(`server is listening on the port of ${port}`);
