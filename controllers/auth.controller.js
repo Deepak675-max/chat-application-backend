@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const fs = require('fs');
 
-const jwtModule = require('../middlewares/auth.middlewares')
+const jwtModule = require('../middlewares/auth.middleware')
 
 const joiUser = require('../helper/joi/auth.joi_validation');
 const { sendForgotPasswordEmail } = require('../helper/sevice/nodemailer.sevice');
@@ -99,7 +99,6 @@ const getUserFromToken = async (req, res, next) => {
             userId: req.user.id,
             userName: req.user.userName,
             email: req.user.email,
-            isPremiumUser: req.user.isPremiumUser
         };
         if (res.headersSent === false) {
             res.status(200).send({

@@ -11,13 +11,14 @@ const signAccessToken = (payloadData) => {
             const jwtAccessToken = JWT.sign(
                 {
                     userId: payloadData.userId,
-                    email: payloadData.email
+                    email: payloadData.email,
+                    exp: parseInt(moment.duration(moment().endOf("day")).asSeconds())
                 },
                 process.env.JWT_TOKEN_SECRET_KEY
             );
-            await redisClient.SET(`${payloadData.userId}`, jwtAccessToken, {
-                EX: parseInt(moment.duration(moment().endOf("day")).asSeconds()),
-            })
+
+            await redisClient.SET(`${payloadData.userId}`, jwtAccessToken);
+
             resolve(jwtAccessToken);
         } catch (error) {
             next(httpErrors.Unauthorized(notAuthorized));
@@ -42,10 +43,14 @@ const verifyAccessToken = async (req, res, next) => {
 
         const payloadData = JWT.verify(accessToken, process.env.JWT_TOKEN_SECRET_KEY);
 
+        if (payloadData.exp && payloadData.exp < parseInt(moment.duration(moment().endOf("day")).asSeconds())) {
+            throw httpErrors[401](notAuthorized);
+        }
+
         const cachedAccessToken = await redisClient.GET(`${payloadData.userId}`);
 
         if (accessToken !== cachedAccessToken) {
-            throw notAuthorized;
+            throw httpErrors[401](notAuthorized);
         }
         const userDetails = await User.findOne({
             where: {
@@ -58,7 +63,7 @@ const verifyAccessToken = async (req, res, next) => {
         next();
 
     } catch (error) {
-        next(httpErrors.Unauthorized(notAuthorized));
+        next(error);
     }
 }
 

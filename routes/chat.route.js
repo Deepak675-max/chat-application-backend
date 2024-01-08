@@ -1,25 +1,14 @@
 const express = require("express");
-
 const chatRouter = express.Router();
+const upload = require("../middlewares/file.middleware");
 
-const authMiddleware = require('../middlewares/auth.middlewares');
+const authMiddleware = require('../middlewares/auth.middleware');
 
 const chatController = require('../controllers/chat.controller');
 
-chatRouter.post('/chat', authMiddleware.verifyAccessToken, chatController.createChat);
-
-// chatRouter.post('/login', chatController.loginUser);
-
+chatRouter.post('/group-chat', authMiddleware.verifyAccessToken, upload.single('fileInput'), chatController.createGroupChat);
+chatRouter.post('/private-chat', authMiddleware.verifyAccessToken, chatController.createPrivateChat);
 chatRouter.get('/chats', authMiddleware.verifyAccessToken, chatController.getChats);
 chatRouter.get('/chats/:chatId', authMiddleware.verifyAccessToken, chatController.getChatDetails);
-
-
-// authRouter.get('/logout', authMiddleware.verifyAccessToken, chatController.logoutUser);
-
-// authRouter.post('/forgot-password', authController.forgotPassword);
-// authRouter.get('/reset-password/:id', authController.sendResetPasswordForm);
-// authRouter.post('/update-password/:resetToken', authController.updatePassword);
-
-
 
 module.exports = chatRouter;

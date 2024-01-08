@@ -13,9 +13,6 @@ const Chat = sequelize.define('Chat', {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
-    chatImage: {
-        type: DataTypes.STRING,
-    },
     lastMessage: {
         type: DataTypes.STRING,
     },
