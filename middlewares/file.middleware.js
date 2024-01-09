@@ -3,7 +3,9 @@ const path = require("path");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'C:/Users/deepa/OneDrive/Desktop/chat application/backend/public/files')
+        // cb(null, 'C:/Users/deepa/OneDrive/Desktop/chat application/backend/public/files')
+        const uploadPath = path.join(__dirname, 'public', 'files');
+        cb(null, uploadPath);
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
