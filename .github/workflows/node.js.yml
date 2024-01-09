@@ -37,7 +37,12 @@ jobs:
           port: ${{secrets.PORT}}
 
           script: |
-            cd ~/chat_app
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+            . ~/.nvm/nvm.sh
+
+            nvm install 18
+            npm install -g pm2
+            cd ~/chat_app/chat-application-backend
             git pull origin main
             npm install
             npm run build
