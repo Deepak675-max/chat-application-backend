@@ -4,7 +4,7 @@ const path = require("path");
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         // cb(null, 'C:/Users/deepa/OneDrive/Desktop/chat application/backend/public/files')
-        const uploadPath = path.join(__dirname, 'public', 'files');
+        const uploadPath = '/home/ubuntu/chat_app/chat-application-backend/public/files'
         cb(null, uploadPath);
     },
     filename: function (req, file, cb) {
