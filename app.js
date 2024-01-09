@@ -12,7 +12,7 @@ const initializeSocket = require('./helper/common/init_socket.io');
 initializeSocket(server);
 
 chatAppBackend.use(cors({
-    origin: "http://13.200.172.204:80"
+    origin: "http://13.200.172.204"
 }));
 
 const sequelize = require('./helper/common/init_mysql');
