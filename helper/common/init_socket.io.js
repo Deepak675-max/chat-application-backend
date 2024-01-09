@@ -13,7 +13,7 @@ function initializeSocket(server) {
     const io = socketIo(server, {
         pingTimeout: 60000,
         cors: {
-            origin: "http://127.0.0.1:5500", //specific origin you want to give access to,
+            origin: "http://13.200.172.204" //specific origin you want to give access to,
         }
     });
 
