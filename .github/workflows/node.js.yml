@@ -37,11 +37,6 @@ jobs:
           port: ${{secrets.PORT}}
 
           script: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-            . ~/.nvm/nvm.sh
-
-            nvm install 18
-            npm install -g pm2
             cd ~/chat_app
             git pull origin main
             npm install
