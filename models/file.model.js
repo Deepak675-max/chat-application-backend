@@ -43,5 +43,6 @@ const File = sequelize.define('File', {
 
 File.hasOne(Chat);
 File.hasOne(User);
+User.belongsTo(File);
 
 module.exports = File;
