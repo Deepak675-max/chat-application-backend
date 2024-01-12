@@ -19,7 +19,7 @@ const sendForgotPasswordEmail = async (emailConfig) => {
             to: emailConfig.recipient,
             subject: "Forget password email",
             text: "please reset your password using following link",
-            html: '<p>Click <a href="http://52.66.114.142:3000/api/auth/reset-password/' + emailConfig.recoveryToken + '">here</a> to reset your password</p>'
+            html: '<p>Click <a href="http://13.200.172.204:4500/api/auth/reset-password/' + emailConfig.recoveryToken + '">here</a> to reset your password</p>'
         });
 
         return status;

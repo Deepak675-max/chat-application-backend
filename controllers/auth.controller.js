@@ -60,12 +60,12 @@ const loginUser = async (req, res, next) => {
             }
         })
         if (!doesUserExist)
-            throw httpErrors.NotFound('invalid credentials');
+            throw httpErrors.Unauthorized('invalid credentials');
 
         const isPasswordMatch = await bcrypt.compare(userDetails.password, doesUserExist.password);
 
         if (!isPasswordMatch)
-            throw httpErrors.NotFound('invalid credentials.');
+            throw httpErrors.Unauthorized('invalid credentials.');
 
         const jwtAccessToken = await jwtModule.signAccessToken({
             userId: doesUserExist.id,
